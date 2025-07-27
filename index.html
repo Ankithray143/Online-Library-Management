@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI Wesley Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transform: translateZ(20px);
+        }
+
+        .logo-img {
+            width: 60px;
+            height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transform: translateZ(15px);
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: white;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-left: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.admin {
+            background: rgba(26, 42, 108, 0.4);
+        }
+
+        .nav-button.admin:hover {
+            background: rgba(26, 42, 108, 0.6);
+        }
+
+        .admin-link {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .admin-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 6rem 2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://wesleyengineeringcollege.com/static/img/clg2.jpg') no-repeat center center;
+            background-size: cover;
+            filter: brightness(0.7);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+            max-width: 800px;
+        }
+
+        .college-logo {
+            width: 200px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            transform: translateZ(30px);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .explore-button {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 10px;
+            background: white;
+            color: #1a2a6c;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateZ(25px);
+            font-size: 1.2rem;
+            display: inline-block;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .explore-button:hover {
+            transform: translateZ(35px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            background: #fdbb2d;
+            color: white;
+        }
+
+        .admin-button {
+            background: #1a2a6c;
+            color: white;
+        }
+
+        .admin-button:hover {
+            background: #b21f1f;
+        }
+
+        .section-title {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .features-section {
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transform: translateZ(30px);
+            color: #fdbb2d;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transform: translateZ(25px);
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+            transform: translateZ(20px);
+        }
+
+        .campus-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .campus-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .campus-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .campus-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+
+        .campus-image:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .campus-image img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .campus-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            color: white;
+            transform: translateZ(10px);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fdbb2d;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo-container">
+                <img src="https://wesleyengineeringcollege.com/static/img/WITS.png" alt="WITS Logo" class="logo-img">
+                <h1 class="logo-text">CSI Wesley Library</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+                <a href="admin-login.html" class="admin-link">Admin Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section hero-section" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <img src="https://wesleyengineeringcollege.com/static/img/WITS.png" alt="College Logo" class="college-logo">
+            <h1>Welcome to CSI Wesley Library</h1>
+            <p>Discover a world of knowledge at CSI Wesley Institute of Technology and Science Library. Your gateway to academic excellence and lifelong learning.</p>
+            <div class="search-container">
+                <a href="verify-student.html" class="explore-button">Explore Library</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <h2 class="section-title">Library Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book-reader"></i>
+                </div>
+                <h3>Digital Catalogs</h3>
+                <p>Access our extensive collection of e-books and digital resources.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <h3>Online Access</h3>
+                <p>Access library resources 24/7 from anywhere on campus.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Smart Search</h3>
+                <p>Find books and resources quickly with our advanced search system.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Real-time Updates</h3>
+                <p>Get notifications about due dates and available books.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3>Borrowing History</h3>
+                <p>Track your borrowing history and manage renewals easily.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <h3>Bookmarking</h3>
+                <p>Save and organize your favorite books and resources.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="campus-section">
+        <h2 class="campus-title">Our Campus</h2>
+        <div class="campus-gallery">
+            <div class="campus-image">
+                <img src="https://wesleyengineeringcollege.com/static/img/clg1.jpg" alt="Campus View 1">
+                <div class="image-overlay">Main Building</div>
+            </div>
+            <div class="campus-image">
+                <img src="https://wesleyengineeringcollege.com/static/img/clg2.jpg" alt="Campus View 2">
+                <div class="image-overlay">Library Building</div>
+            </div>
+            <div class="campus-image">
+                <img src="https://wesleyengineeringcollege.com/static/img/clg3.jpg" alt="Campus View 3">
+                <div class="image-overlay">Campus Garden</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <img src="https://wesleyengineeringcollege.com/static/img/WITS.png" alt="College Logo" class="footer-logo">
+            <p>CSI Wesley Institute of Technology and Science</p>
+            <p>1-7-132/142, P.G ROAD, NEAR PARADISE, Secunderabad-500003, Telangana, India</p>
+            <div class="footer-links">
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Use</a>
+            </div>
+            <p>&copy; 2025 CSI Wesley Library. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details | CSI Wesley Institute</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --background: #ecf0f1;
+            --text: #2c3e50;
+            --card-bg: #ffffff;
+            --gradient-start: #2980b9;
+            --gradient-end: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f6f8fa 0%, #e9ecef 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--warning), var(--success));
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .book-details-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .book-details-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+        }
+
+        .book-header {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            background: linear-gradient(45deg, rgba(44, 62, 80, 0.05), rgba(52, 152, 219, 0.05));
+        }
+
+        .book-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .book-image:hover {
+            transform: scale(1.02);
+        }
+
+        .book-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .book-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.1), rgba(255,255,255,0.1));
+        }
+
+        .book-info {
+            padding: 1rem;
+        }
+
+        .book-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .book-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .meta-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .meta-item i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            width: 30px;
+            text-align: center;
+        }
+
+        .meta-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .book-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .description-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .description-title i {
+            color: var(--secondary);
+        }
+
+        .description-content {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .availability-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .status-available {
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+        }
+
+        .status-borrowed {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--accent);
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--gradient-end), var(--gradient-start));
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--success), var(--warning), var(--accent));
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .book-header {
+                grid-template-columns: 1fr;
+            }
+
+            .book-image {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .book-title {
+                font-size: 2rem;
+            }
+
+            .meta-info {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Details</h1>
+    </header>
+
+    <div class="container">
+        <h2 class="section-heading">1st Year - 1st Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="english.jpg" alt="English">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">English</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 1</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">1st Year - 2nd Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="mathematics-2.jpg" alt="Mathematics-2">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Mathematics-2</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 5</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">2nd Year - 1st Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="computer_oriented_statistical_methods.jpg" alt="Computer Oriented Statistical Methods">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Computer Oriented Statistical Methods</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 10</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">2nd Year - 2nd Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="discreet_mathematics.jpg" alt="Discrete Mathematics">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Discrete Mathematics</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 15</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">3rd Year - 1st Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="software_engineering.jpg" alt="Software Engineering">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Software Engineering</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 20</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">3rd Year - 2nd Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="compiler_design.jpg" alt="Compiler Design">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Compiler Design</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 26</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">4th Year - 1st Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="cloud_computing.jpg" alt="Cloud Computing">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Cloud Computing</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 32</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-heading">4th Year - 2nd Semester</h2>
+        <div class="book-details-container">
+            <div class="book-header">
+                <div class="book-image">
+                    <img src="organizational_behaviour.jpg" alt="Organizational Behaviour">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Organizational Behaviour</h1>
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <i class="fas fa-user"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Author</span>
+                                <span class="meta-value">Author 36</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Publication Year</span>
+                                <span class="meta-value">2024</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-book"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">ISBN</span>
+                                <span class="meta-value">978-3-16-148410-0</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-list"></i>
+                            <div class="meta-content">
+                                <span class="meta-label">Category</span>
+                                <span class="meta-value">Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="availability-status status-available">
+                        <i class="fas fa-check-circle"></i>
+                        Available
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-book-reader"></i>
+                            Borrow Book
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-description">
+                <h2 class="description-title">
+                    <i class="fas fa-info-circle"></i>
+                    Description
+                </h2>
+                <p class="description-content">
+                    Book description goes here. This is a detailed overview of what the book is about,
+                    its key features, and what readers can expect to learn from it.
+                </p>
+            </div>
+        </div>
+
+        <a href="books_management_page.html" class="back-link">Back to Books Management</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSI Wesley Institute of Technology and Science | Book Details</p>
+    </footer>
+</body>
+</html>

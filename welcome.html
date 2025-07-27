@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CSI Wesley Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #4a90e2, #003366);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .welcome-banner {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .user-info {
+            font-size: 1.2em;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #003366;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+
+        .action-button:hover {
+            background: #357abd;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 200px;
+            margin: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <a href="/logout" class="logout-btn">Logout</a>
+    
+    <div class="header">
+        <h1>Welcome to CSI Wesley Library</h1>
+    </div>
+
+    <div class="welcome-banner">
+        <div class="user-info">
+            Welcome, <span id="userName">User</span>!
+        </div>
+        <p>Your digital gateway to knowledge and learning</p>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-number" id="borrowedBooks">0</div>
+            <p>Books Borrowed</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" id="dueBooks">0</div>
+            <p>Books Due Soon</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" id="readingStreak">0</div>
+            <p>Day Reading Streak</p>
+        </div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card" onclick="window.location.href='books_list.html'">
+            <h3>Browse Books</h3>
+            <p>Explore our vast collection of books across various categories</p>
+            <a href="books_list.html" class="action-button">Browse Now</a>
+        </div>
+        
+        <div class="feature-card" onclick="window.location.href='borrowed_books.html'">
+            <h3>My Borrowed Books</h3>
+            <p>View and manage your currently borrowed books</p>
+            <a href="borrowed_books.html" class="action-button">View Books</a>
+        </div>
+        
+        <div class="feature-card" onclick="window.location.href='profile_page.html'">
+            <h3>My Profile</h3>
+            <p>View and update your profile information</p>
+            <a href="profile_page.html" class="action-button">View Profile</a>
+        </div>
+        
+        <div class="feature-card" onclick="window.location.href='previous_year_questions.html'">
+            <h3>Previous Year Questions</h3>
+            <p>Access previous year examination questions</p>
+            <a href="previous_year_questions.html" class="action-button">View Questions</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to get JWT token from localStorage
+        function getToken() {
+            return localStorage.getItem('token');
+        }
+
+        // Function to fetch user data
+        async function fetchUserData() {
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${getToken()}`
+                    }
+                });
+                if (response.ok) {
+                    const userData = await response.json();
+                    document.getElementById('userName').textContent = userData.username;
+                    document.getElementById('borrowedBooks').textContent = userData.borrowed_books_count || 0;
+                    document.getElementById('dueBooks').textContent = userData.due_books_count || 0;
+                    document.getElementById('readingStreak').textContent = userData.reading_streak || 0;
+                } else {
+                    // If token is invalid, redirect to login
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+
+        // Check if user is logged in
+        if (!getToken()) {
+            window.location.href = 'login.html';
+        } else {
+            fetchUserData();
+        }
+    </script>
+</body>
+</html>

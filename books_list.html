@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books List | CSI Wesley Institute</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --background: #ecf0f1;
+            --text: #2c3e50;
+            --card-bg: #ffffff;
+            --gradient-start: #2980b9;
+            --gradient-end: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f6f8fa 0%, #e9ecef 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #e74c3c, #f39c12, #2ecc71);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            flex-grow: 1;
+        }
+
+        .section-heading {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary);
+            position: relative;
+        }
+
+        .books {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .book {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+        }
+
+        .book:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .book img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .book:hover img {
+            transform: scale(1.05);
+        }
+
+        .book-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .book-author i {
+            color: var(--secondary);
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--gradient-end), var(--gradient-start));
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, #2ecc71, #f39c12, #e74c3c);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .books {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .book {
+                padding: 1rem;
+            }
+
+            .section-heading {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Books List</h1>
+    </header>
+
+    <div class="container">
+        <h2 class="section-heading">1st Year - 1st Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="english.jpg" alt="English">
+                <div class="book-title">English</div>
+                <div class="book-author">Author 1</div>
+            </div>
+            <div class="book">
+                <img src="basic_electrical_engineering.jpg" alt="Basic Electrical Engineering">
+                <div class="book-title">Basic Electrical Engineering</div>
+                <div class="book-author">Author 2</div>
+            </div>
+            <div class="book">
+                <img src="chemistry.jpg" alt="Chemistry">
+                <div class="book-title">Chemistry</div>
+                <div class="book-author">Author 3</div>
+            </div>
+            <div class="book">
+                <img src="mathematics_1.jpg" alt="Mathematics-1">
+                <div class="book-title">Mathematics-1</div>
+                <div class="book-author">Author 4</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">1st Year - 2nd Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="mathematics_2.jpg" alt="Mathematics-2">
+                <div class="book-title">Mathematics-2</div>
+                <div class="book-author">Author 5</div>
+            </div>
+            <div class="book">
+                <img src="environmental_science.jpg" alt="Environmental Science">
+                <div class="book-title">Environmental Science</div>
+                <div class="book-author">Author 6</div>
+            </div>
+            <div class="book">
+                <img src="applied_physics.jpg" alt="Applied Physics">
+                <div class="book-title">Applied Physics</div>
+                <div class="book-author">Author 7</div>
+            </div>
+            <div class="book">
+                <img src="programming_for_problem_solving.jpg" alt="Programming for Problem Solving">
+                <div class="book-title">Programming for Problem Solving</div>
+                <div class="book-author">Author 8</div>
+            </div>
+            <div class="book">
+                <img src="engineering_graphics.jpg" alt="Engineering Graphics">
+                <div class="book-title">Engineering Graphics</div>
+                <div class="book-author">Author 9</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">2nd Year - 1st Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="computer_oriented_statistical_methods.jpg" alt="Computer Oriented Statistical Methods">
+                <div class="book-title">Computer Oriented Statistical Methods</div>
+                <div class="book-author">Author 10</div>
+            </div>
+            <div class="book">
+                <img src="computer_organization_and_architecture.jpg" alt="Computer Organization and Architecture">
+                <div class="book-title">Computer Organization and Architecture</div>
+                <div class="book-author">Author 11</div>
+            </div>
+            <div class="book">
+                <img src="analog_and_digital_electronics.jpg" alt="Analog and Digital Electronics">
+                <div class="book-title">Analog and Digital Electronics</div>
+                <div class="book-author">Author 12</div>
+            </div>
+            <div class="book">
+                <img src="oop_using_cpp.jpg" alt="Object Oriented Programming Using C++">
+                <div class="book-title">Object Oriented Programming Using C++</div>
+                <div class="book-author">Author 13</div>
+            </div>
+            <div class="book">
+                <img src="data_structures.jpg" alt="Data Structures">
+                <div class="book-title">Data Structures</div>
+                <div class="book-author">Author 14</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">2nd Year - 2nd Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="discreet_mathematics.jpg" alt="Discrete Mathematics">
+                <div class="book-title">Discrete Mathematics</div>
+                <div class="book-author">Author 15</div>
+            </div>
+            <div class="book">
+                <img src="business_economics.jpg" alt="Business Economics & Financial Analysis">
+                <div class="book-title">Business Economics & Financial Analysis</div>
+                <div class="book-author">Author 16</div>
+            </div>
+            <div class="book">
+                <img src="operating_system.jpg" alt="Operating System">
+                <div class="book-title">Operating System</div>
+                <div class="book-author">Author 17</div>
+            </div>
+            <div class="book">
+                <img src="java_programming.jpg" alt="Java Programming">
+                <div class="book-title">Java Programming</div>
+                <div class="book-author">Author 18</div>
+            </div>
+            <div class="book">
+                <img src="database_management_system.jpg" alt="Database Management System">
+                <div class="book-title">Database Management System</div>
+                <div class="book-author">Author 19</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">3rd Year - 1st Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="software_engineering.jpg" alt="Software Engineering">
+                <div class="book-title">Software Engineering</div>
+                <div class="book-author">Author 20</div>
+            </div>
+            <div class="book">
+                <img src="web_technologies.jpg" alt="Web Technologies">
+                <div class="book-title">Web Technologies</div>
+                <div class="book-author">Author 21</div>
+            </div>
+            <div class="book">
+                <img src="principle_of_programming_language.jpg" alt="Principle of Programming Language">
+                <div class="book-title">Principle of Programming Language</div>
+                <div class="book-author">Author 22</div>
+            </div>
+            <div class="book">
+                <img src="formal_language_and_automata_theory.jpg" alt="Formal Language and Automata Theory">
+                <div class="book-title">Formal Language and Automata Theory</div>
+                <div class="book-author">Author 23</div>
+            </div>
+            <div class="book">
+                <img src="distributed_database.jpg" alt="Distributed Database">
+                <div class="book-title">Distributed Database</div>
+                <div class="book-author">Author 24</div>
+            </div>
+            <div class="book">
+                <img src="computer_network.jpg" alt="Computer Network">
+                <div class="book-title">Computer Network</div>
+                <div class="book-author">Author 25</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">3rd Year - 2nd Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="compiler_design.jpg" alt="Compiler Design">
+                <div class="book-title">Compiler Design</div>
+                <div class="book-author">Author 26</div>
+            </div>
+            <div class="book">
+                <img src="cyber_security.jpg" alt="Cyber Security">
+                <div class="book-title">Cyber Security</div>
+                <div class="book-author">Author 27</div>
+            </div>
+            <div class="book">
+                <img src="design_and_analysis_of_algorithms.jpg" alt="Design and Analysis of Algorithms">
+                <div class="book-title">Design and Analysis of Algorithms</div>
+                <div class="book-author">Author 28</div>
+            </div>
+            <div class="book">
+                <img src="machine_learning.jpg" alt="Machine Learning">
+                <div class="book-title">Machine Learning</div>
+                <div class="book-author">Author 29</div>
+            </div>
+            <div class="book">
+                <img src="software_testing_methodologies.jpg" alt="Software Testing Methodologies">
+                <div class="book-title">Software Testing Methodologies</div>
+                <div class="book-author">Author 30</div>
+            </div>
+            <div class="book">
+                <img src="fundamentals_of_internet_of_things.jpg" alt="Fundamentals of Internet of Things">
+                <div class="book-title">Fundamentals of Internet of Things</div>
+                <div class="book-author">Author 31</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">4th Year - 1st Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="cloud_computing.jpg" alt="Cloud Computing">
+                <div class="book-title">Cloud Computing</div>
+                <div class="book-author">Author 32</div>
+            </div>
+            <div class="book">
+                <img src="cryptography_and_network_security.jpg" alt="Cryptography and Network Security">
+                <div class="book-title">Cryptography and Network Security</div>
+                <div class="book-author">Author 33</div>
+            </div>
+            <div class="book">
+                <img src="data_mining.jpg" alt="Data Mining">
+                <div class="book-title">Data Mining</div>
+                <div class="book-author">Author 34</div>
+            </div>
+            <div class="book">
+                <img src="software_process_project_management.jpg" alt="Software Process Project Management">
+                <div class="book-title">Software Process Project Management</div>
+                <div class="book-author">Author 35</div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">4th Year - 2nd Semester</h2>
+        <div class="books">
+            <div class="book">
+                <img src="organizational_behaviour.jpg" alt="Organizational Behaviour">
+                <div class="book-title">Organizational Behaviour</div>
+                <div class="book-author">Author 36</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSI Wesley Institute of Technology and Science | Books List</p>
+    </footer>
+</body>
+</html>

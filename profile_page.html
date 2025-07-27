@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | CSI Wesley Institute</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        /* Header styling */
+        header {
+            background: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+        }
+
+        /* Main container styling */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section headings */
+        .section-heading {
+            font-size: 1.8em;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        /* Profile details */
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #e0e7ff;
+            border-radius: 8px;
+        }
+
+        .profile-item span {
+            font-weight: bold;
+        }
+
+        /* Settings */
+        .settings {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .setting-item {
+            padding: 15px;
+            background-color: #4a90e2;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .setting-item:hover {
+            background-color: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Footer styling */
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>User Profile</h1>
+    </header>
+
+    <div class="container">
+        <h2 class="section-heading">Profile Details</h2>
+        <div class="profile-details">
+            <div class="profile-item"><span>Name:</span> John Doe</div>
+            <div class="profile-item"><span>Email:</span> johndoe@example.com</div>
+            <div class="profile-item"><span>Roll Number:</span> 123456</div>
+            <!-- Add more profile details as needed -->
+        </div>
+
+        <h2 class="section-heading">Settings</h2>
+        <div class="settings">
+            <div class="setting-item">Change Password</div>
+            <div class="setting-item">Update Email</div>
+            <div class="setting-item">Logout</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSI Wesley Institute of Technology and Science | User Profile</p>
+    </footer>
+</body>
+</html>

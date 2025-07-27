@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational YouTube Playlists</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #1a237e;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff4081, #7c4dff);
+            border-radius: 2px;
+        }
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+        .course-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff4081, #7c4dff);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .course-card:hover::before {
+            transform: scaleX(1);
+        }
+        .course-card h3 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        .course-card a {
+            color: #7c4dff;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 25px;
+            background: rgba(124, 77, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .course-card a:hover {
+            background: #7c4dff;
+            color: white;
+            transform: translateX(5px);
+        }
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+            .course-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Educational YouTube Playlists</h1>
+        <div class="courses-grid">
+            <div class="course-card">
+                <h3>Basic Electrical Engineering</h3>
+                <a href="https://youtube.com/playlist?list=PLmAmHQ-_5ySzJrY5XlO0SPdQneyhr9v0B" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Mathematics-1</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4bfOsGyBN3BBGco-ESAfl0x" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Mathematics-2</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4ZlAMFDEJQj9Yv9MnM1DuYQ" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Environmental Science</h3>
+                <a href="https://youtube.com/playlist?list=PL3qvHcrYGy1u2egw2tipHWODV6elVC2Gg" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Applied Physics</h3>
+                <a href="https://youtube.com/playlist?list=PL-NAzKZaxzxatV0IYNze9HFw3yX7u5u03" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Programming for Problem Solving</h3>
+                <a href="https://youtube.com/playlist?list=PLERZXVMwiajo9Wew4lopIXZgfgj6SbBzp" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Engineering Graphics</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4YdQhmsm2piLte4V4CQbg-p" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Computer Oriented Statistical Method</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4aCYMosa4V4dACEF_hY_jbl" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Computer Organization and Architecture</h3>
+                <a href="https://youtube.com/playlist?list=PLrjkTql3jnm8AcFgkc5TE_yQgeHEuKYrG" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Analog and Digital Electronics</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4byP10GgT7WfJjgH9BLJ-Sc" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Object Oriented Programming using C++</h3>
+                <a href="https://youtube.com/playlist?list=PLrjkTql3jnm-Voi7giH4JITCi6cuZSN42" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Data Structure</h3>
+                <a href="https://youtube.com/playlist?list=PLXj4XH7LcRfAhaLFnq4fQ5ASOqKd08-Us" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Discrete Mathematics</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4ZqsLIt67w9akdWb_EcLQe-" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Business Economic & Financial Analysis</h3>
+                <a href="https://youtube.com/playlist?list=PLLhSIFfDZcUUIkQTwI-EBQ63aiHNStrN_" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Operating System</h3>
+                <a href="https://youtube.com/playlist?list=PLrjkTql3jnm9U1tSPnPQWQGIGNkUwBFv-" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Java Programming</h3>
+                <a href="https://youtube.com/playlist?list=PLXj4XH7LcRfDlQklXu3Hrtru-bm2dJ9Df" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Database Management System</h3>
+                <a href="https://youtube.com/playlist?list=PLrjkTql3jnm-CLxHftqLgkrZbM8fUt0vn" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Software Engineering</h3>
+                <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiEed7SKZBnC6ypFDWYLRvB2" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Web Technologies</h3>
+                <a href="https://youtube.com/playlist?list=PLrjkTql3jnm8d1ddpVKifXO_fPjSKATCp" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Principle of Programming Language</h3>
+                <a href="https://youtube.com/playlist?list=PLJSrGkRNEDAiW1z22aW_2ItwdKpa1Hfa9" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Formal Language and Automata Theory</h3>
+                <a href="https://youtube.com/playlist?list=PLeIE3weEKo4YHPpB05sA1mm-1oXnBYNzd" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Distributed Database</h3>
+                <a href="https://youtube.com/playlist?list=PLK32cwTOY7L8D9GxdYR2JkEIAA1J1sKYO" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Computer Network</h3>
+                <a href="https://youtube.com/playlist?list=PLrjkTql3jnm-iqlEOuVTkmCaRP8F2H3-u" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Compiler Design</h3>
+                <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiEKtKSIHYusizkESC42diyc" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Cyber Security</h3>
+                <a href="https://youtube.com/playlist?list=PLYwpaL_SFmcArHtWmbs_vXX6soTK3WEJw" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Design and Analysis of Algorithm</h3>
+                <a href="https://youtube.com/playlist?list=PLmAmHQ-_5ySx5Pov1ZJmHebsVuiBvUflf" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Machine Learning</h3>
+                <a href="https://youtube.com/playlist?list=PLxCzCOWd7aiEXg5BV10k9THtjnS48yI-T" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Software Testing Methodologies</h3>
+                <a href="https://youtube.com/playlist?list=PLdEdh7ef30CtlI__sOL1owY-XQlKYektw" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Fundamentals of Internet of Things</h3>
+                <a href="https://youtube.com/playlist?list=PLYwpaL_SFmcB8fDd64B8SkJiPpEIzpCzC" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Cloud Computing</h3>
+                <a href="https://youtu.be/Y7qzspHBB78" target="_blank">View Video</a>
+            </div>
+            <div class="course-card">
+                <h3>Cryptography and Network Security</h3>
+                <a href="https://youtube.com/playlist?list=PLmAmHQ-_5ySx_dXmOwSuGGGyE8XsbYT0n" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Data Mining</h3>
+                <a href="https://youtube.com/playlist?list=PLmAmHQ-_5ySxFoIGmY1MJao-XYvYGxxgj" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Software Process Project Management</h3>
+                <a href="https://youtube.com/playlist?list=PLYwpaL_SFmcCB7zUM0YSDR-1mM4KoiyLM" target="_blank">View Playlist</a>
+            </div>
+            <div class="course-card">
+                <h3>Organizational Behavior</h3>
+                <a href="https://youtube.com/playlist?list=PLaAhQ2ofZZRD7oDHGKxcu0Se6_A4_dhqN" target="_blank">View Playlist</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

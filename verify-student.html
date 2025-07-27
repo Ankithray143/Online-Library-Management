@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Verification - CSI Wesley Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .verification-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: container-appear 1s ease-out forwards;
+        }
+
+        @keyframes container-appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .college-logo {
+            width: 150px;
+            display: block;
+            margin: 0 auto 2rem;
+            transform: translateZ(30px);
+        }
+
+        h2 {
+            color: #1a2a6c;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateZ(30px);
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+            transform-style: preserve-3d;
+        }
+
+        label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: #666;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            transform: translateZ(25px);
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) translateZ(30px) scale(0.8);
+            color: #1a2a6c;
+        }
+
+        .file-upload {
+            margin-bottom: 1.5rem;
+            transform: translateZ(20px);
+        }
+
+        .file-upload label {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0;
+            color: #333;
+            font-size: 0.9rem;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .file-upload input[type="file"] {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .file-upload .file-info {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            margin: 1rem auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-icon {
+            font-size: 1.5rem;
+            color: #666;
+            margin-right: 0.5rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            transform: translateZ(30px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: #1a2a6c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #b21f1f;
+        }
+
+        .error-message {
+            color: #b21f1f;
+            text-align: center;
+            margin-top: 1rem;
+            transform: translateZ(20px);
+            display: none;
+        }
+
+        .roll-format-info {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.3rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .verification-status {
+            display: none;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .verification-status.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .verification-status.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .verification-status i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <img src="https://wesleyengineeringcollege.com/static/img/WITS.png" alt="College Logo" class="college-logo">
+        <h2>Student Verification</h2>
+        <form id="verificationForm">
+            <div class="form-group">
+                <input type="text" id="rollNo" name="rollNo" placeholder=" " required pattern="^(19|20|21|22|23|24)XU1A\d{4}$">
+                <label for="rollNo">Roll Number</label>
+                <div class="roll-format-info">
+                    Format: YYXU1AXXXX<br>
+                    Example: 21XU1A0500<br>
+                    YY: Year (19-24)<br>
+                    XXXX: Student Number
+                </div>
+            </div>
+
+            <div class="verification-status" id="verificationStatus"></div>
+
+            <div class="form-group">
+                <input type="text" id="branch" name="branch" placeholder=" " required>
+                <label for="branch">Branch</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="year" name="year" placeholder=" " required>
+                <label for="year">Year of Study</label>
+            </div>
+
+            <div class="photo-preview" id="photoPreview">
+                <img id="previewImage" src="#" alt="Profile Preview">
+            </div>
+
+            <div class="file-upload">
+                <label for="profilePhoto">
+                    <i class="fas fa-user-circle upload-icon"></i>Profile Photo (Required)
+                </label>
+                <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*" required>
+                <div class="file-info">Upload a recent passport-size photo</div>
+            </div>
+
+            <div class="error-message" id="errorMessage">Invalid student details. Please try again.</div>
+            <button type="submit">Verify & Access Library</button>
+        </form>
+        <a href="index.html" class="back-link">Back to Home</a>
+    </div>
+
+    <script>
+        // Preview uploaded photo
+        document.getElementById('profilePhoto').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('photoPreview');
+                    const previewImg = document.getElementById('previewImage');
+                    preview.style.display = 'block';
+                    previewImg.src = e.target.result;
+                    // Store the image data in sessionStorage
+                    sessionStorage.setItem('profilePhotoData', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Roll number format validation
+        const rollNoInput = document.getElementById('rollNo');
+        const branchInput = document.getElementById('branch');
+        const verificationStatus = document.getElementById('verificationStatus');
+
+        // Branch codes mapping (based on the first two digits after 1A)
+        const branchCodes = {
+            '01': 'Civil Engineering',
+            '02': 'Electrical and Electronics Engineering',
+            '03': 'Mechanical Engineering',
+            '04': 'Electronics and Communication Engineering',
+            '05': 'Computer Science and Engineering',
+            '12': 'Information Technology'
+        };
+
+        rollNoInput.addEventListener('input', function(e) {
+            const rollNo = e.target.value.toUpperCase();
+            // Extract branch code if roll number matches format
+            if (rollNo.length >= 8) {
+                const branchCode = rollNo.substring(6, 8);
+                const branch = branchCodes[branchCode];
+                if (branch) {
+                    branchInput.value = branch;
+                }
+            }
+        });
+
+        async function verifyStudent(rollNo) {
+            try {
+                // Here we would make an API call to the college website to verify the student
+                // For now, we'll simulate verification based on the roll number format
+                const isValid = /^(19|20|21|22|23|24)XU1A\d{4}$/.test(rollNo);
+                
+                if (isValid) {
+                    // Extract year and branch code
+                    const year = '20' + rollNo.substring(0, 2);
+                    const branchCode = rollNo.substring(6, 8);
+                    const branch = branchCodes[branchCode];
+
+                    if (branch) {
+                        verificationStatus.className = 'verification-status success';
+                        verificationStatus.innerHTML = '<i class="fas fa-check-circle"></i>Student verified successfully!';
+                        return true;
+                    } else {
+                        verificationStatus.className = 'verification-status error';
+                        verificationStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i>Invalid branch code';
+                        return false;
+                    }
+                } else {
+                    verificationStatus.className = 'verification-status error';
+                    verificationStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i>Invalid roll number format';
+                    return false;
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                verificationStatus.className = 'verification-status error';
+                verificationStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i>Verification failed. Please try again.';
+                return false;
+            }
+        }
+
+        document.getElementById('verificationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const rollNo = document.getElementById('rollNo').value.toUpperCase();
+            const branch = document.getElementById('branch').value;
+            const year = '20' + rollNo.substring(0, 2);
+            const profilePhoto = document.getElementById('profilePhoto').files[0];
+
+            // Check if profile photo is uploaded
+            if (!profilePhoto) {
+                document.getElementById('errorMessage').textContent = 'Please upload your profile photo';
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            // Verify student roll number
+            const isVerified = await verifyStudent(rollNo);
+            if (!isVerified) {
+                return;
+            }
+
+            try {
+                // Store student info in session
+                sessionStorage.setItem('studentRollNo', rollNo);
+                sessionStorage.setItem('studentBranch', branch);
+                sessionStorage.setItem('studentYear', year);
+                
+                // Redirect to library page
+                window.location.href = 'library.html';
+            } catch (error) {
+                console.error('Verification error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Library Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .admin-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .action-btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand">Admin Dashboard</a>
+            <a href="/logout.html" class="btn btn-outline-light">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- User Management Section -->
+        <div class="admin-section">
+            <h2 class="section-title">User Management</h2>
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <i class="fas fa-user-plus"></i> Add New User
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersList">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Book Management Section -->
+        <div class="admin-section">
+            <h2 class="section-title">Book Management</h2>
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addBookModal">
+                <i class="fas fa-book-medical"></i> Add New Book
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="booksList">
+                        <!-- Books will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- E-Library Section -->
+        <div class="admin-section">
+            <h2 class="section-title">E-Library Management</h2>
+            <button class="btn btn-info mb-3 text-white" data-bs-toggle="modal" data-bs-target="#addEbookModal">
+                <i class="fas fa-file-pdf"></i> Add New E-Book
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Format</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ebooksList">
+                        <!-- E-books will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Previous Year Papers Section -->
+        <div class="admin-section">
+            <h2 class="section-title">Previous Year Papers</h2>
+            <button class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#addPaperModal">
+                <i class="fas fa-file-alt"></i> Add New Paper
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Year</th>
+                            <th>Exam Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="papersList">
+                        <!-- Papers will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Video Resources Section -->
+        <div class="admin-section">
+            <h2 class="section-title">Video Resources</h2>
+            <button class="btn btn-danger mb-3" data-bs-toggle="modal" data-bs-target="#addVideoModal">
+                <i class="fas fa-video"></i> Add New Video
+            </button>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Subject</th>
+                            <th>Duration</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="videosList">
+                        <!-- Videos will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role</label>
+                            <select class="form-control" name="role">
+                                <option value="student">Student</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addUser()">Add User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Book Modal -->
+    <div class="modal fade" id="addBookModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBookForm">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Author</label>
+                            <input type="text" class="form-control" name="author" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <input type="text" class="form-control" name="category" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" name="quantity" required min="1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addBook()">Add Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add E-Book Modal -->
+    <div class="modal fade" id="addEbookModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New E-Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addEbookForm">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text" class="form-control" name="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PDF File</label>
+                            <input type="file" class="form-control" name="pdfFile" accept=".pdf" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addEbook()">Add E-Book</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Paper Modal -->
+    <div class="modal fade" id="addPaperModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Previous Year Paper</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPaperForm">
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text" class="form-control" name="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Year</label>
+                            <input type="number" class="form-control" name="year" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Exam Type</label>
+                            <input type="text" class="form-control" name="examType" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PDF File</label>
+                            <input type="file" class="form-control" name="pdfFile" accept=".pdf" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addPaper()">Add Paper</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Video Modal -->
+    <div class="modal fade" id="addVideoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Video Resource</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addVideoForm">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text" class="form-control" name="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Video URL (YouTube)</label>
+                            <input type="url" class="form-control" name="videoUrl" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Duration (minutes)</label>
+                            <input type="number" class="form-control" name="duration" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addVideo()">Add Video</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Authentication data for authorized users
+        const authorizedUsers = [
+            { username: 'Ankith Ray', password: 'csi@123' },
+            { username: 'Md Ahmed', password: 'csi@123' },
+            { username: 'Syed Ramath', password: 'csi@123' }
+        ];
+
+        // Function to check login credentials
+        function checkLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const user = authorizedUsers.find(u => u.username === username);
+            
+            if (user && user.password === password) {
+                // Successful login
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminUsername', username);
+                window.location.href = 'admin.html';
+            } else {
+                alert('Invalid username or password. Access denied.');
+            }
+        }
+
+        // Check if user is logged in
+        function checkAuthStatus() {
+            if (!localStorage.getItem('adminLoggedIn')) {
+                window.location.href = 'admin-login.html';
+            }
+        }
+
+        // Run auth check when page loads
+        checkAuthStatus();
+
+        // Load all data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsers();
+            loadBooks();
+            loadEbooks();
+            loadPapers();
+            loadVideos();
+        });
+
+        // User Management
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/admin/users');
+                const users = await response.json();
+                const usersList = document.getElementById('usersList');
+                usersList.innerHTML = users.map(user => `
+                    <tr>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        async function addUser() {
+            const form = document.getElementById('addUserForm');
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/api/admin/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                if (response.ok) {
+                    alert('User added successfully');
+                    loadUsers();
+                    form.reset();
+                    document.querySelector('#addUserModal .btn-close').click();
+                }
+            } catch (error) {
+                console.error('Error adding user:', error);
+                alert('Error adding user');
+            }
+        }
+
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to remove this user?')) return;
+            try {
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    alert('User removed successfully');
+                    loadUsers();
+                }
+            } catch (error) {
+                console.error('Error removing user:', error);
+                alert('Error removing user');
+            }
+        }
+
+        // Similar functions for books, ebooks, papers, and videos
+        // Book Management
+        async function loadBooks() {
+            // Implementation similar to loadUsers
+        }
+
+        async function addBook() {
+            const form = document.getElementById('addBookForm');
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/api/admin/books', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                if (response.ok) {
+                    alert('Book added successfully');
+                    loadBooks();
+                    form.reset();
+                    document.querySelector('#addBookModal .btn-close').click();
+                }
+            } catch (error) {
+                console.error('Error adding book:', error);
+                alert('Error adding book');
+            }
+        }
+
+        // Implement similar functions for e-books, papers, and videos
+        // Following the same pattern as users and books
+    </script>
+</body>
+</html>

@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | CSI Wesley Institute</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #60a5fa;
+            --light: #f0f9ff;
+            --dark: #1e3a8a;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--light);
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            padding: 1.2rem 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .logo-section:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-title {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-title span {
+            display: block;
+            font-size: 1rem;
+            font-weight: 400;
+            text-transform: none;
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+        }
+
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notification-bell i {
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .notification-bell:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .notification-bell:hover i {
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-section:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .profile-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--light);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            color: var(--light);
+        }
+
+        .profile-info .student-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .profile-info .student-id {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .logout-btn {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.2);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn i {
+            font-size: 1.1rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 3rem;
+            background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+            min-height: calc(100vh - 80px);
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            background-size: 200% 100%;
+            animation: gradient-shift 3s linear infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .welcome-section h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: title-fade 0.5s ease-out;
+        }
+
+        @keyframes title-fade {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: var(--dark);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: text-fade 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes text-fade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: stats-fade 0.5s ease-out 0.4s both;
+        }
+
+        @keyframes stats-fade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover i {
+            transform: scale(1.1) rotate(5deg);
+            color: var(--accent);
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .services-section {
+            animation: services-fade 0.5s ease-out 0.6s both;
+        }
+
+        @keyframes services-fade {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .service-description {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .service-link:hover {
+            color: var(--accent);
+            gap: 0.8rem;
+        }
+
+        .service-link i {
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Footer styling */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--accent));
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-logo:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-logo h3 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-logo h3::after {
+            display: none;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-contact i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1200px) {
+            header {
+                padding: 1rem 2rem;
+            }
+
+            .search-box {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .search-box {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .logo-section {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .header-title {
+                font-size: 1.8rem;
+            }
+
+            .user-section {
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .user-controls {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .profile-section {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .logout-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-section">
+            <div class="header-title">
+                Digital Library
+            </div>
+        </div>
+        <div class="profile-section" id="profileSection">
+            <div class="profile-photo">
+                <img id="headerProfilePhoto" src="https://wesleyengineeringcollege.com/static/img/WITS.png" alt="Profile Photo">
+            </div>
+            <div class="profile-info">
+                <div class="student-name" id="studentName">Student</div>
+                <div class="student-id" id="studentId">Roll No</div>
+            </div>
+        </div>
+        <div class="user-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for books, resources...">
+            </div>
+            <div class="user-controls">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <a href="logout.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <section class="welcome-section">
+            <h1>Welcome to Digital Library</h1>
+            <p>Discover a world of knowledge at your fingertips. Access thousands of books, research papers, and educational resources anytime, anywhere. Your journey to academic excellence starts here.</p>
+        </section>
+
+        <section class="quick-stats">
+            <div class="stat-card">
+                <i class="fas fa-book"></i>
+                <h3>10,000+</h3>
+                <p>Available Books</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3>5,000+</h3>
+                <p>Active Users</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-download"></i>
+                <h3>25,000+</h3>
+                <p>Downloads</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <h3>24/7</h3>
+                <p>Access Available</p>
+            </div>
+        </section>
+
+        <section class="services-section">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="service-title">E-Library</h3>
+                        <p class="service-description">Access our vast collection of e-books, journals, and research papers. Read online or download for offline access.</p>
+                        <a href="elibrary.html" class="service-link">
+                            Browse Collection <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="service-title">Previous Year Papers</h3>
+                        <p class="service-description">Find previous year question papers for all courses. Perfect for exam preparation and practice.</p>
+                        <a href="previous_year_questions.html" class="service-link">
+                            View Papers <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="service-title">Video Resources</h3>
+                        <p class="service-description">Watch educational videos, lectures, and tutorials from expert faculty members.</p>
+                        <a href="youtube_channels.html" class="service-link">
+                            Watch Videos <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-content">
+                        <div class="service-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <h3 class="service-title">Book Management</h3>
+                        <p class="service-description">Manage your borrowed books, track due dates, and request new titles all in one place.</p>
+                        <a href="books_management_page.html" class="service-link">
+                            Manage Books <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="https://wesleyengineeringcollege.com/static/img/WITS.png" alt="CSI Wesley Logo">
+                    <h3>CSI Wesley Library</h3>
+                </div>
+                <p class="footer-text">
+                    Your gateway to knowledge and academic excellence. Discover, learn, and grow with our comprehensive collection of resources.
+                </p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/csiwits?igsh=MTd6dWVlYmIzdHZudw==" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Library</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Library Rules</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Book Categories</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Study Resources</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <div class="footer-contact">
+                    <p>
+                        <i class="fas fa-building"></i>
+                        CSI Wesley Institute of Technology and Science
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        1-7-132/142, P.G ROAD, NEAR PARADISE
+                        Secunderabad-500003, Telangana, India
+                    </p>
+                    <p>
+                        <i class="fas fa-phone"></i>
+                        040-27818137
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i>
+                        principalxu1@gmail.com
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CSI Wesley Library. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Load profile photo and student info when page loads
+        window.addEventListener('load', function() {
+            // Get profile photo from session storage
+            const profilePhotoData = sessionStorage.getItem('profilePhotoData');
+            if (profilePhotoData) {
+                document.getElementById('headerProfilePhoto').src = profilePhotoData;
+            }
+
+            // Get student info from session storage
+            const rollNo = sessionStorage.getItem('studentRollNo');
+            const branch = sessionStorage.getItem('studentBranch');
+            const year = sessionStorage.getItem('studentYear');
+
+            if (rollNo) {
+                document.getElementById('studentId').textContent = rollNo;
+                document.getElementById('studentName').textContent = `${branch} - ${year} Year`;
+            }
+        });
+
+        // Add click handler for profile section
+        document.getElementById('profileSection').addEventListener('click', function() {
+            // You can add profile view/edit functionality here
+            alert('Profile section clicked! You can add profile management features here.');
+        });
+
+        // Study Materials Tab Switching
+        const yearTabs = document.querySelectorAll('.year-tab');
+        yearTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                yearTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Here you would typically load the corresponding year's content
+                loadYearContent(tab.textContent);
+            });
+        });
+
+        function loadYearContent(year) {
+            // This function would load the semester and subject data for the selected year
+            // For now, we'll just log the selected year
+            console.log(`Loading content for ${year}`);
+            // In a real implementation, this would make an API call to fetch the data
+        }
+
+        // Toggle subject materials
+        const subjectItems = document.querySelectorAll('.subject-item');
+        subjectItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Close other open items
+                subjectItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                // Toggle current item
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

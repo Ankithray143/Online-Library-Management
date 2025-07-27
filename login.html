@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CSI Wesley Library</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: container-appear 1s ease-out forwards;
+        }
+
+        @keyframes container-appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        h2 {
+            color: #1a2a6c;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateZ(30px);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+
+        input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateZ(25px);
+        }
+
+        label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: #666;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            transform: translateZ(25px);
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            transform: translateY(-1.5rem) translateZ(30px) scale(0.8);
+            color: #1a2a6c;
+        }
+
+        button {
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateZ(25px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            transform: translateZ(15px);
+        }
+
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .or-divider::before {
+            left: 0;
+        }
+
+        .or-divider::after {
+            right: 0;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1.5rem;
+            transform: translateZ(15px);
+        }
+
+        .links a {
+            color: #1a2a6c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #b21f1f;
+            text-decoration: underline;
+        }
+
+        .g_id_signin {
+            margin-top: 1rem;
+            transform: translateZ(20px);
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Welcome Back</h2>
+        <form id="loginForm" method="POST">
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder=" " required>
+                <label for="username">Username</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="or-divider">or</div>
+
+        <div id="g_id_onload"
+             data-client_id="YOUR_CLIENT_ID_HERE"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-login_uri="http://localhost:5000/api/google-login"
+             data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-size="large"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-shape="rectangular"
+             data-logo_alignment="left">
+        </div>
+
+        <div class="links">
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            <p><a href="forgot-password.html">Forgot Password?</a></p>
+        </div>
+    </div>
+
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('isAdmin', data.is_admin);
+                    
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again.');
+            }
+        }
+
+        async function handleGoogleSignIn(response) {
+            try {
+                const res = await fetch('/api/google-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        credential: response.credential
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('isAdmin', data.is_admin);
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error || 'Google login failed');
+                }
+            } catch (error) {
+                console.error('Google login error:', error);
+                alert('Google login failed. Please try again.');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    </script>
+</body>
+</html>
